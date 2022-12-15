@@ -14,7 +14,7 @@ dependencies {
 
 group = 'com.gildedrose'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = "11"
 
 test {
     useJUnitPlatform()
@@ -25,3 +25,4 @@ task texttest(type: JavaExec) {
     classpath = sourceSets.test.runtimeClasspath
     args "30"
 }
+targetCompatibility = JavaVersion.VERSION_11
