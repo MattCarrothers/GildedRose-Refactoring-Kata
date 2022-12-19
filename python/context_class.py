@@ -1,9 +1,5 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod
-from typing import List
-
-import item_classes
-from item_classes import *
+from abc import ABC
 
 
 class Context:
@@ -19,32 +15,113 @@ class Context:
     def strategy(self, strategy: Strategy) -> None:
         self._strategy = strategy
 
-    def build_object(self, data) -> object:
-        return self._strategy.create_item(data)
+    def adjust_quality(self):
+        return self._strategy.adjust_quality()
+
+    def check_out_of_date(self):
+        return self._strategy.check_out_of_date()
+
+    def increase_quality_by_(self, num):
+        return self._strategy.increase_quality_by_(num)
+
+    def decrease_quality_by_(self, num):
+        return self._strategy.decrease_quality_by_(num)
+
+    def advance_day(self):
+        return self._strategy.advance_day()
 
 
 class Strategy(ABC):
 
-    @abstractmethod
-    def create_item(self, data: List):
+    def __init__(self, name, sell_in, quality):
+        self.name = name
+        self.sell_in = sell_in
+        self.quality = quality
+
+    def __repr__(self):
+        return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+
+    def adjust_quality(self):
+        pass
+
+    def check_out_of_date(self):
+        pass
+
+    def increase_quality_by_(self, num):
+        if self.quality < 50:
+            self.quality = self.quality + num
+
+    def decrease_quality_by_(self, num):
+        if self.quality > 0:
+            self.quality = self.quality - num
+
+    def advance_day(self):
         pass
 
 
 class BackstageStrategy(Strategy):
-    def create_item(self, data: List) -> item_classes.Backstage:
-        return Backstage(data[0], data[1], data[2])
+    def __init__(self, name, sell_in, quality):
+        super().__init__(name, sell_in, quality)
+
+    def adjust_quality(self):
+        self.increase_quality_by_(1)
+        if self.sell_in < 11:
+            self.increase_quality_by_(1)
+        if self.sell_in < 6:
+            self.increase_quality_by_(1)
+
+    def check_out_of_date(self):
+        if self.sell_in < 0:
+            self.quality = 0
+
+    def advance_day(self):
+        self.sell_in = self.sell_in - 1
 
 
 class BrieStrategy(Strategy):
-    def create_item(self, data: List) -> item_classes.Brie:
-        return Brie(data[0], data[1], data[2])
+    def __init__(self, name, sell_in, quality):
+        super().__init__(name, sell_in, quality)
+
+    def adjust_quality(self):
+        self.increase_quality_by_(1)
+
+    def check_out_of_date(self):
+        if self.sell_in < 0:
+            self.increase_quality_by_(1)
+
+    def advance_day(self):
+        self.sell_in = self.sell_in - 1
 
 
 class LegendaryStrategy(Strategy):
-    def create_item(self, data: List) -> item_classes.Legendary:
-        return Legendary(data[0], data[1], data[2])
+    def __init__(self, name, sell_in, quality):
+        super().__init__(name, sell_in, quality)
+
+    def increase_quality_by_(self, num):
+        pass
+
+    def decrease_quality_by_(self, num):
+        pass
 
 
 class BasicStrategy(Strategy):
-    def create_item(self, data: List) -> item_classes.Basic:
-        return Basic(data[0], data[1], data[2])
+    def __init__(self, name, sell_in, quality):
+        super().__init__(name, sell_in, quality)
+
+    def adjust_quality(self):
+        self.decrease_quality_by_(1)
+
+    def check_out_of_date(self):
+        if self.sell_in < 0:
+            self.decrease_quality_by_(1)
+
+    def increase_quality_by_(self, num):
+        if self.quality < 50:
+            self.quality = self.quality + num
+
+    def decrease_quality_by_(self, num):
+        if self.quality > 0:
+            self.quality = self.quality - num
+
+    def advance_day(self):
+        self.sell_in = self.sell_in - 1
