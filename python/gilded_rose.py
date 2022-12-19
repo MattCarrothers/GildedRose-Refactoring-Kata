@@ -8,4 +8,3 @@ class GildedRose(object):
             item.adjust_quality()
             item.advance_day()
             item.check_out_of_date()
-

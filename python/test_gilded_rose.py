@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-import unittest
+from factory import Factory
 from gilded_rose import *
 from item_classes import *
 from golden_master import golden_master_to_string
+import unittest
 
 
 class GildedRoseTest(unittest.TestCase):
@@ -112,7 +113,7 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(expected[1], gilded_rose.items[0].sell_in)
         self.assertEqual(expected[2], gilded_rose.items[0].quality)
 
-    def test_out_of_date_tickets(self):
+    def test_going_out_of_date_tickets(self):
         items = [Backstage("Backstage passes to a TAFKAL80ETC concert", 0, 20)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
@@ -134,6 +135,36 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(expected[1], gilded_rose.items[0].sell_in)
         self.assertEqual(expected[2], gilded_rose.items[0].quality)
 
+    def test_factory_build_single_item(self):
+        factory = Factory()
+        single_input = ["Elixir of the Mongoose", 10, 25]
+
+        actual = type(factory.build_item(single_input))
+        expected = type(Basic("Elixir of the Mongoose", 10, 25))
+
+        self.assertEqual(expected, actual)
+
+    def test_factory_build_one_item_of_each_type(self):
+        factory = Factory()
+        inputs = [
+            ["Aged Brie", 2, 0],
+            ["Elixir of the Mongoose", 5, 7],
+            ["Sulfuras, Hand of Ragnaros", 0, 80],
+            ["Backstage passes to a TAFKAL80ETC concert", 15, 20]]
+
+        items = list(map(factory.build_item, inputs))
+
+        items_2 = [
+            Brie(name="Aged Brie", sell_in=2, quality=0),
+            Basic(name="Elixir of the Mongoose", sell_in=5, quality=7),
+            Legendary(name="Sulfuras, Hand of Ragnaros", sell_in=0, quality=80),
+            Backstage(name="Backstage passes to a TAFKAL80ETC concert", sell_in=15, quality=20)
+            ]
+
+        actual = list(map(type, items))
+        expected = list(map(type, items_2))
+
+        self.assertEqual(expected, actual)
 
 if __name__ == '__main__':
     unittest.main()
