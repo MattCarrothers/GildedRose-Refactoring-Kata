@@ -75,7 +75,7 @@ class Legendary(Item):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
 
     def increase_quality_by_(self, num):
-        return
+        pass
 
     def decrease_quality_by_(self, num):
-        return
+        pass

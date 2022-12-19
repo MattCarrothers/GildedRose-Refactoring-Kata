@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from factory import Factory
-from gilded_rose import *
+from gilded_rose import GildedRose
 from item_classes import *
 from golden_master import golden_master_to_string
 import unittest

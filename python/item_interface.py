@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 
 
 class Item(ABC):
@@ -11,10 +11,10 @@ class Item(ABC):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
 
     def adjust_quality(self):
-        return
+        pass
 
     def check_out_of_date(self):
-        return
+        pass
 
     def increase_quality_by_(self, num):
         if self.quality < 50:
@@ -25,4 +25,4 @@ class Item(ABC):
             self.quality = self.quality - num
 
     def advance_day(self):
-        return
+        pass

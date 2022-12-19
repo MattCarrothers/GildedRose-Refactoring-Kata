@@ -9,11 +9,6 @@ from item_classes import *
 class Context:
 
     def __init__(self, strategy: Strategy) -> None:
-        """
-        Usually, the Context accepts a strategy through the constructor, but
-        also provides a setter to change it at runtime.
-        """
-
         self._strategy = strategy
 
     @property
@@ -24,10 +19,8 @@ class Context:
     def strategy(self, strategy: Strategy) -> None:
         self._strategy = strategy
 
-    def do_some_business_logic(self) -> None:
-        print("Context: Sorting data using the strategy (not sure how it'll do it)")
-        result = self._strategy.do_algorithm(["a", "b", "c", "d", "e"])
-        print(",".join(result))
+    def build_item(self, data) -> object:
+        return self._strategy.create_item(data)
 
 
 class Strategy(ABC):
