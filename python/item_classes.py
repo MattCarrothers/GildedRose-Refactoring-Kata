@@ -1,12 +1,9 @@
-from Interface import implements
 from item_interface import Item
 
 
-class Backstage(implements(Item)):
+class Backstage(Item):
     def __init__(self, name, sell_in, quality):
-        self.name = name
-        self.sell_in = sell_in
-        self.quality = quality
+        super().__init__(name, sell_in, quality)
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
@@ -22,23 +19,13 @@ class Backstage(implements(Item)):
         if self.sell_in < 0:
             self.quality = 0
 
-    def increase_quality_by_(self, num):
-        if self.quality < 50:
-            self.quality = self.quality + num
-
-    def decrease_quality_by_(self, num):
-        if self.quality > 0:
-            self.quality = self.quality - num
-
     def advance_day(self):
         self.sell_in = self.sell_in - 1
 
 
-class Basic(implements(Item)):
+class Basic(Item):
     def __init__(self, name, sell_in, quality):
-        self.name = name
-        self.sell_in = sell_in
-        self.quality = quality
+        super().__init__(name, sell_in, quality)
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
@@ -62,11 +49,9 @@ class Basic(implements(Item)):
         self.sell_in = self.sell_in - 1
 
 
-class Brie(implements(Item)):
+class Brie(Item):
     def __init__(self, name, sell_in, quality):
-        self.name = name
-        self.sell_in = sell_in
-        self.quality = quality
+        super().__init__(name, sell_in, quality)
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
@@ -78,38 +63,19 @@ class Brie(implements(Item)):
         if self.sell_in < 0:
             self.increase_quality_by_(1)
 
-    def increase_quality_by_(self, num):
-        if self.quality < 50:
-            self.quality = self.quality + num
-
-    def decrease_quality_by_(self, num):
-        if self.quality > 0:
-            self.quality = self.quality - num
-
     def advance_day(self):
         self.sell_in = self.sell_in - 1
 
 
-class Legendary(implements(Item)):
+class Legendary(Item):
     def __init__(self, name, sell_in, quality):
-        self.name = name
-        self.sell_in = sell_in
-        self.quality = quality
+        super().__init__(name, sell_in, quality)
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
-
-    def adjust_quality(self):
-        return
-
-    def check_out_of_date(self):
-        return
 
     def increase_quality_by_(self, num):
         return
 
     def decrease_quality_by_(self, num):
-        return
-
-    def advance_day(self):
         return
