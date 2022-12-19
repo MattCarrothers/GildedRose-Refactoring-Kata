@@ -11,7 +11,7 @@ class Factory:
             context = Context(LegendaryStrategy())
         else:
             context = Context(BasicStrategy())
-        item = context.build_item(entry)
+        item = context.build_object(entry)
         return item
 
         # if 'else' in build_item:

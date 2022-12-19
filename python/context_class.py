@@ -19,7 +19,7 @@ class Context:
     def strategy(self, strategy: Strategy) -> None:
         self._strategy = strategy
 
-    def build_item(self, data) -> object:
+    def build_object(self, data) -> object:
         return self._strategy.create_item(data)
 
 
