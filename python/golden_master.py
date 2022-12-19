@@ -1,21 +1,25 @@
 from __future__ import print_function
+from factory import Factory
 from gilded_rose import *
-from item_classes import *
 
 
 def golden_master_to_string(days):
     string_to_return = "OMGHAI!\n"
-    items = [
-        Basic(name="+5 Dexterity Vest", sell_in=10, quality=20),
-        Brie(name="Aged Brie", sell_in=2, quality=0),
-        Basic(name="Elixir of the Mongoose", sell_in=5, quality=7),
-        Legendary(name="Sulfuras, Hand of Ragnaros", sell_in=0, quality=80),
-        Legendary(name="Sulfuras, Hand of Ragnaros", sell_in=-1, quality=80),
-        Backstage(name="Backstage passes to a TAFKAL80ETC concert", sell_in=15, quality=20),
-        Backstage(name="Backstage passes to a TAFKAL80ETC concert", sell_in=10, quality=49),
-        Backstage(name="Backstage passes to a TAFKAL80ETC concert", sell_in=5, quality=49),
-        Basic(name="Conjured Mana Cake", sell_in=3, quality=6),  # <-- :O
-    ]
+    factory = Factory()
+
+    inputs = [
+        ["+5 Dexterity Vest", 10, 20],
+        ["Aged Brie", 2, 0],
+        ["Elixir of the Mongoose", 5, 7],
+        ["Sulfuras, Hand of Ragnaros", 0, 80],
+        ["Sulfuras, Hand of Ragnaros", -1, 80],
+        ["Backstage passes to a TAFKAL80ETC concert", 15, 20],
+        ["Backstage passes to a TAFKAL80ETC concert", 10, 49],
+        ["Backstage passes to a TAFKAL80ETC concert", 5, 49],
+        ["Conjured Mana Cake", 3, 6]
+        ]
+
+    items = list(map(factory.build_item, inputs))
 
     import sys
     if len(sys.argv) > 1:

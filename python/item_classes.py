@@ -1,5 +1,5 @@
-from item_interface import Item
 from Interface import implements
+from item_interface import Item
 
 
 class Backstage(implements(Item)):
