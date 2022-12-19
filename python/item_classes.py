@@ -5,9 +5,6 @@ class Backstage(Item):
     def __init__(self, name, sell_in, quality):
         super().__init__(name, sell_in, quality)
 
-    def __repr__(self):
-        return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
-
     def adjust_quality(self):
         self.increase_quality_by_(1)
         if self.sell_in < 11:
@@ -26,9 +23,6 @@ class Backstage(Item):
 class Basic(Item):
     def __init__(self, name, sell_in, quality):
         super().__init__(name, sell_in, quality)
-
-    def __repr__(self):
-        return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
 
     def adjust_quality(self):
         self.decrease_quality_by_(1)
@@ -53,9 +47,6 @@ class Brie(Item):
     def __init__(self, name, sell_in, quality):
         super().__init__(name, sell_in, quality)
 
-    def __repr__(self):
-        return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
-
     def adjust_quality(self):
         self.increase_quality_by_(1)
 
@@ -70,9 +61,6 @@ class Brie(Item):
 class Legendary(Item):
     def __init__(self, name, sell_in, quality):
         super().__init__(name, sell_in, quality)
-
-    def __repr__(self):
-        return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
 
     def increase_quality_by_(self, num):
         pass
