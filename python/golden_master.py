@@ -19,7 +19,7 @@ def golden_master_to_string(days):
         ["Conjured Mana Cake", 3, 6]
         ]
 
-    items = list(map(factory.get_strategy, inputs))
+    items = list(map(factory.item_with_strategy, inputs))
 
     import sys
     if len(sys.argv) > 1:

@@ -2,35 +2,6 @@ from __future__ import annotations
 from abc import ABC
 
 
-class Context:
-
-    def __init__(self, strategy: Strategy) -> None:
-        self._strategy = strategy
-
-    @property
-    def strategy(self) -> Strategy:
-        return self._strategy
-
-    @strategy.setter
-    def strategy(self, strategy: Strategy) -> None:
-        self._strategy = strategy
-
-    def adjust_quality(self):
-        return self._strategy.adjust_quality()
-
-    def check_out_of_date(self):
-        return self._strategy.check_out_of_date()
-
-    def increase_quality_by_(self, num):
-        return self._strategy.increase_quality_by_(num)
-
-    def decrease_quality_by_(self, num):
-        return self._strategy.decrease_quality_by_(num)
-
-    def advance_day(self):
-        return self._strategy.advance_day()
-
-
 class Strategy(ABC):
 
     def adjust_quality(self):
@@ -52,9 +23,6 @@ class Strategy(ABC):
 
 
 class BackstageStrategy(Strategy):
-    def __init__(self, name, sell_in, quality):
-        super().__init__(name, sell_in, quality)
-
     def adjust_quality(self):
         self.increase_quality_by_(1)
         if self.sell_in < 11:
@@ -71,9 +39,6 @@ class BackstageStrategy(Strategy):
 
 
 class BrieStrategy(Strategy):
-    def __init__(self, name, sell_in, quality):
-        super().__init__(name, sell_in, quality)
-
     def adjust_quality(self):
         self.increase_quality_by_(1)
 
@@ -97,9 +62,6 @@ class LegendaryStrategy(Strategy):
 
 
 class BasicStrategy(Strategy):
-    def __init__(self, name, sell_in, quality):
-        super().__init__(name, sell_in, quality)
-
     def adjust_quality(self):
         self.decrease_quality_by_(1)
 

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+from strategy import *
 from factory import Factory
 from gilded_rose import GildedRose
-from item_classes import *
 from golden_master import golden_master_to_string
+from item import Item
 import unittest
 
 
@@ -17,13 +18,13 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_foo(self):
-        items = [Basic("foo", 0, 0)]
+        items = [Item("foo", 0, 0, BasicStrategy)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual("foo", items[0].name)
 
     def test_sulfarus_legendary_unchanged(self):
-        items = [Legendary("Sulfuras, Hand of Ragnaros", 0, 80)]
+        items = [Item("Sulfuras, Hand of Ragnaros", 0, 80, LegendaryStrategy)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         expected = ["Sulfuras, Hand of Ragnaros", 0, 80]
@@ -33,7 +34,7 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(expected[2], items[0].quality)
 
     def test_basic_item(self):
-        items = [Basic("Elixir of the Mongoose", 10, 25)]
+        items = [Item("Elixir of the Mongoose", 10, 25, BasicStrategy)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
 
@@ -44,7 +45,7 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(expected[2], items[0].quality)
 
     def test_basic_item_out_of_date(self):
-        items = [Basic("Elixir of the Mongoose", -5, 25)]
+        items = [Item("Elixir of the Mongoose", -5, 25, BasicStrategy)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
 
@@ -55,7 +56,7 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(expected[2], items[0].quality)
 
     def test_basic_item_fives_times(self):
-        items = [Basic("Elixir of the Mongoose", 10, 25)]
+        items = [Item("Elixir of the Mongoose", 10, 25, BasicStrategy)]
         gilded_rose = GildedRose(items)
         for i in range(5):
             gilded_rose.update_quality()
@@ -67,7 +68,7 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(expected[2], items[0].quality)
 
     def test_basic_item_fives_times_entering_out_of_date(self):
-        items = [Basic("Elixir of the Mongoose", 2, 25)]
+        items = [Item("Elixir of the Mongoose", 2, 25, BasicStrategy)]
         gilded_rose = GildedRose(items)
         for i in range(5):
             gilded_rose.update_quality()
@@ -79,7 +80,7 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(expected[2], items[0].quality)
 
     def test_basic_item_fives_times_out_of_date(self):
-        items = [Basic("Elixir of the Mongoose", -2, 25)]
+        items = [Item("Elixir of the Mongoose", -2, 25, BasicStrategy)]
         gilded_rose = GildedRose(items)
         for i in range(5):
             gilded_rose.update_quality()
@@ -91,7 +92,7 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(expected[2], items[0].quality)
 
     def test_brie_out_of_date(self):
-        items = [Brie("Aged Brie", -1, 20)]
+        items = [Item("Aged Brie", -1, 20, BrieStrategy)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
 
@@ -102,7 +103,7 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(expected[2], gilded_rose.items[0].quality)
 
     def test_brie_quality_over_50(self):
-        items = [Brie("Aged Brie", -1, 45)]
+        items = [Item("Aged Brie", -1, 45, BrieStrategy)]
         gilded_rose = GildedRose(items)
         for i in range(10):
             gilded_rose.update_quality()
@@ -114,7 +115,7 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(expected[2], gilded_rose.items[0].quality)
 
     def test_going_out_of_date_tickets(self):
-        items = [Backstage("Backstage passes to a TAFKAL80ETC concert", 0, 20)]
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 0, 20, BackstageStrategy)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
 
@@ -125,7 +126,7 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(expected[2], gilded_rose.items[0].quality)
 
     def test_already_out_of_date_tickets(self):
-        items = [Backstage("Backstage passes to a TAFKAL80ETC concert", -2, 0)]
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", -2, 0, BackstageStrategy)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
 
@@ -139,8 +140,8 @@ class GildedRoseTest(unittest.TestCase):
         factory = Factory()
         single_input = ["Elixir of the Mongoose", 10, 25]
 
-        actual = type(factory.build_item(single_input))
-        expected = type(Basic("Elixir of the Mongoose", 10, 25))
+        actual = type(factory.item_with_strategy(single_input))
+        expected = type(Item("Elixir of the Mongoose", 10, 25, BasicStrategy))
 
         self.assertEqual(expected, actual)
 
@@ -152,13 +153,13 @@ class GildedRoseTest(unittest.TestCase):
             ["Sulfuras, Hand of Ragnaros", 0, 80],
             ["Backstage passes to a TAFKAL80ETC concert", 15, 20]]
 
-        items = list(map(factory.build_item, inputs))
+        items = list(map(factory.item_with_strategy, inputs))
 
         items_2 = [
-            Brie(name="Aged Brie", sell_in=2, quality=0),
-            Basic(name="Elixir of the Mongoose", sell_in=5, quality=7),
-            Legendary(name="Sulfuras, Hand of Ragnaros", sell_in=0, quality=80),
-            Backstage(name="Backstage passes to a TAFKAL80ETC concert", sell_in=15, quality=20)
+            Item(name="Aged Brie", sell_in=2, quality=0, strategy=BrieStrategy),
+            Item(name="Elixir of the Mongoose", sell_in=5, quality=7, strategy=BasicStrategy),
+            Item(name="Sulfuras, Hand of Ragnaros", sell_in=0, quality=80, strategy=LegendaryStrategy),
+            Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=15, quality=20, strategy=LegendaryStrategy)
             ]
 
         actual = list(map(type, items))
