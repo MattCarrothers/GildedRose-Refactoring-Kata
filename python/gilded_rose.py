@@ -4,7 +4,4 @@ class GildedRose(object):
         self.items = items
 
     def update_quality(self):
-        for item in self.items:
-            item.adjust_quality()
-            item.advance_day()
-            item.check_out_of_date()
+        [item.update_item() for item in self.items]

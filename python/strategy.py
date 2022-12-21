@@ -51,9 +51,6 @@ class BrieStrategy(Strategy):
 
 
 class LegendaryStrategy(Strategy):
-    def __init__(self, name, sell_in, quality):
-        super().__init__(name, sell_in, quality)
-
     def increase_quality_by_(self, num):
         pass
 
@@ -68,14 +65,6 @@ class BasicStrategy(Strategy):
     def check_out_of_date(self):
         if self.sell_in < 0:
             self.decrease_quality_by_(1)
-
-    def increase_quality_by_(self, num):
-        if self.quality < 50:
-            self.quality = self.quality + num
-
-    def decrease_quality_by_(self, num):
-        if self.quality > 0:
-            self.quality = self.quality - num
 
     def advance_day(self):
         self.sell_in = self.sell_in - 1
