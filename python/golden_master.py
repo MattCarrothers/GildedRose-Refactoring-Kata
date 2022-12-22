@@ -1,25 +1,22 @@
 from __future__ import print_function
-from factory import Factory
 from gilded_rose import *
+from item import Item
 
 
 def golden_master_to_string(days):
     string_to_return = "OMGHAI!\n"
-    factory = Factory()
 
-    inputs = [
-        ["+5 Dexterity Vest", 10, 20],
-        ["Aged Brie", 2, 0],
-        ["Elixir of the Mongoose", 5, 7],
-        ["Sulfuras, Hand of Ragnaros", 0, 80],
-        ["Sulfuras, Hand of Ragnaros", -1, 80],
-        ["Backstage passes to a TAFKAL80ETC concert", 15, 20],
-        ["Backstage passes to a TAFKAL80ETC concert", 10, 49],
-        ["Backstage passes to a TAFKAL80ETC concert", 5, 49],
-        ["Conjured Mana Cake", 3, 6]
+    items = [
+        Item("+5 Dexterity Vest", 10, 20),
+        Item("Aged Brie", 2, 0),
+        Item("Elixir of the Mongoose", 5, 7),
+        Item("Sulfuras, Hand of Ragnaros", 0, 80),
+        Item("Sulfuras, Hand of Ragnaros", -1, 80),
+        Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
+        Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
+        Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
+        Item("Conjured Mana Cake", 3, 6)
         ]
-
-    items = list(map(factory.item_with_strategy, inputs))
 
     import sys
     if len(sys.argv) > 1:
