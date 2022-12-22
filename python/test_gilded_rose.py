@@ -136,34 +136,13 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(expected[1], gilded_rose.items[0].sell_in)
         self.assertEqual(expected[2], gilded_rose.items[0].quality)
 
-    def test_factory_build_single_item(self):
+    def test_factory_single_item_strategy(self):
         factory = FactoryStrategy()
-        single_input = ["Elixir of the Mongoose", 10, 25]
+        single_input = Item("Elixir of the Mongoose", 10, 25)
+        single_input.get_strategy(factory)
 
-        actual = type(factory.get_strategy(single_input))
-        expected = type(Item("Elixir of the Mongoose", 10, 25))
-
-        self.assertEqual(expected, actual)
-
-    def test_factory_build_one_item_of_each_type(self):
-        factory = FactoryStrategy()
-        inputs = [
-            ["Aged Brie", 2, 0],
-            ["Elixir of the Mongoose", 5, 7],
-            ["Sulfuras, Hand of Ragnaros", 0, 80],
-            ["Backstage passes to a TAFKAL80ETC concert", 15, 20]]
-
-        items = list(map(Item.get_strategy(factory), inputs))
-
-        items_2 = [
-            Item(name="Aged Brie", sell_in=2, quality=0),
-            Item(name="Elixir of the Mongoose", sell_in=5, quality=7),
-            Item(name="Sulfuras, Hand of Ragnaros", sell_in=0, quality=80),
-            Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=15, quality=20)
-            ]
-
-        actual = list(map(type, items))
-        expected = list(map(type, items_2))
+        actual = single_input.strategy
+        expected = BasicStrategy
 
         self.assertEqual(expected, actual)
 
