@@ -4,7 +4,7 @@ from item import Item
 from observer import DayCount
 
 
-def update_via_observing(days):
+def golden_master_to_string(days):
 
     items = [
         Item("+5 Dexterity Vest", 10, 20),
@@ -16,7 +16,7 @@ def update_via_observing(days):
         Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
         Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
         Item("Conjured Mana Cake", 3, 6)
-        ]
+    ]
 
     day_count = DayCount()
     gilded_rose = GildedRose(items)
@@ -25,5 +25,4 @@ def update_via_observing(days):
     for day in range(days):
         day_count.advance_global_day()
 
-
-update_via_observing(31)
+    return gilded_rose.string_to_return
