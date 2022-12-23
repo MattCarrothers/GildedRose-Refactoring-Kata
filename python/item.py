@@ -1,14 +1,18 @@
+from factory_strategy import FactoryStrategy
+
 
 class Item:
     def __init__(self, name, sell_in, quality):
         self.name = name
         self.sell_in = sell_in
         self.quality = quality
+        self.strategy = None
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
 
-    def update_item(self, factory):
+    def update_item(self):
+        factory = FactoryStrategy()
         self.get_strategy(factory)
         self.strategy.adjust_quality(self)
         self.strategy.advance_day(self)

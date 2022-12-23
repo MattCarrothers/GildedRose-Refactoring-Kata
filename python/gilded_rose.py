@@ -7,5 +7,4 @@ class GildedRose(object):
         self.items = items
 
     def update_quality(self):
-        strategy_factory = FactoryStrategy()
-        [item.update_item(strategy_factory) for item in self.items]
+        [item.update_item() for item in self.items]
