@@ -24,8 +24,7 @@ def update_via_observing(days):
 
     for day in range(days):
         day_count.advance_global_day()
-
     return gilded_rose.string_to_return
 
 
-print(update_via_observing(31))
+print(update_via_observing(30))

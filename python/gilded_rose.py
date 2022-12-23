@@ -6,6 +6,7 @@ class GildedRose(Observer):
     def __init__(self, items):
         self.items = items
         self.string_to_return = "OMGHAI!\n"
+        self.update_output_string(0)
 
     def update_quality(self):
         [item.update_item() for item in self.items]

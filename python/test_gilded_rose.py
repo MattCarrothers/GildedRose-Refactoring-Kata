@@ -14,7 +14,7 @@ class GildedRoseTest(unittest.TestCase):
         expected = text_file.read()
         text_file.close()
 
-        actual = golden_master_to_string(31)
+        actual = golden_master_to_string(30)
         self.assertEqual(expected, actual)
 
     def test_foo(self):

@@ -17,7 +17,7 @@ class Subject(ABC):
 
 
 class DayCount(Subject):
-    _state = -1
+    _state = 0
     _observers = []
 
     def attach(self, observer: Observer) -> None:
@@ -30,8 +30,9 @@ class DayCount(Subject):
     def notify(self) -> None:
         print(f"Day {self._state}: Notifying observers...")
         for observer in self._observers:
-            observer.update_output_string(self._state)
             observer.update_quality()
+            observer.update_output_string(self._state)
+
 
 
     def advance_global_day(self) -> None:
