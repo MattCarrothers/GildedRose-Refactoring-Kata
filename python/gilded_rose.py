@@ -1,7 +1,7 @@
-from factory_strategy import FactoryStrategy
+from observer import Observer
 
 
-class GildedRose(object):
+class GildedRose(Observer):
 
     def __init__(self, items):
         self.items = items

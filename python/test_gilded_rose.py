@@ -2,7 +2,7 @@
 from strategy import *
 from factory_strategy import FactoryStrategy
 from gilded_rose import GildedRose
-from golden_master import golden_master_to_string
+from main_with_observer import golden_master_to_string
 from item import Item
 import unittest
 

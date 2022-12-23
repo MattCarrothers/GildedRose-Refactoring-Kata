@@ -1,10 +1,10 @@
 from __future__ import print_function
 from gilded_rose import *
 from item import Item
+from observer import DayCount
 
 
-def golden_master_to_string(days):
-    string_to_return = "OMGHAI!\n"
+def update_via_observing(days):
 
     items = [
         Item("+5 Dexterity Vest", 10, 20),
@@ -18,14 +18,12 @@ def golden_master_to_string(days):
         Item("Conjured Mana Cake", 3, 6)
         ]
 
-    import sys
-    if len(sys.argv) > 1:
-        days = int(sys.argv[1]) + 1
+    day_count = DayCount()
+    gilded_rose = GildedRose(items)
+    day_count.attach(gilded_rose)
+
     for day in range(days):
-        string_to_return += f"-------- day {day} --------\nname, sellIn, quality\n"
-        for item in items:
-            string_to_return += str(item)
-            string_to_return += "\n"
-        string_to_return += "\n"
-        GildedRose(items).update_quality()
-    return string_to_return
+        day_count.advance_global_day()
+
+
+update_via_observing(31)
